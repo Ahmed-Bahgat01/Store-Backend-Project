@@ -34,7 +34,8 @@ export class booksStore {
   }
   async create(b: Book): Promise<Book> {
     try {
-      const sql = 'INSERT INTO books (title, author, total_pages, summary) VALUES($1, $2, $3, $4) RETURNING *'
+      const sql = `INSERT INTO books (title, author, total_pages, summary) 
+      VALUES($1, $2, $3, $4) RETURNING *`
       const conn = await dbClient.connect()
       const result = await conn
           .query(sql, [b.title, b.author, b.totalPages, b.summary])
@@ -49,7 +50,7 @@ export class booksStore {
     try {
       const sql = 'DELETE FROM books WHERE id=($1)'
       const conn = await dbClient.connect()
-      const result = await conn.query(sql,[id])
+      const result = await conn.query(sql, [id])
       const book = result.rows[0]
       return book
     } catch (error) {
