@@ -3,6 +3,12 @@ import * as controllers from '../../controllers/users.controller'
 
 const routes = Router()
 
-routes.post('/', controllers.createUser)
+routes.route('/')
+    .get(controllers.getAllUsers)
+    .post(controllers.createUser)
+routes.route('/:id')
+    .get(controllers.getUser)
+    .patch(controllers.updateUser)
+    .delete(controllers.deleteUser)
 
 export default routes
