@@ -1,7 +1,7 @@
 interface Error {
-  errorName? : string,
-  errorStack? : string,
-  errorMessage? : string,
-  errorStatus? : number
+  status?: number
+  name?: string
+  message?: string
+  stack?: string
 }
 export default Error

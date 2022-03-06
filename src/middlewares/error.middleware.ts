@@ -6,8 +6,8 @@ const errorMiddleware = (
     req: Request,
     res: Response,
     next: NextFunction) => {
-  const status = error.errorStatus || 500
-  const message = error.errorMessage || 'something went wrong'
+  const status = error.status || 500
+  const message = error.message || 'something went wrong'
   res.status(status).json({status, message})
 }
 export default errorMiddleware

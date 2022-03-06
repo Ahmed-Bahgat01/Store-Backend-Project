@@ -1,8 +1,21 @@
 import {Request, Response, NextFunction} from 'express'
 import jwt from 'jsonwebtoken'
 import config from '../config'
-// import Error from '../interfaces/error.interface'
+import Error from '../interfaces/error.interface'
 
+// const handleUnauthError = (next: NextFunction){
+//   const error: Error = new Error()
+// }
+// const handleUnauthorizedError = (next: NextFunction) => {
+//   const error: Error = new Error('Login Error, Please login again')
+//   error.status = 401
+//   next(error)
+// }
+const handleUnauthorizedError = (next: NextFunction) => {
+  const error:Error = new Error('Login Error, Please login again')
+  error.status = 401
+  next(error)
+}
 
 const validateTokenMiddleware = (
     req: Request,
@@ -23,18 +36,22 @@ const validateTokenMiddleware = (
         if (isTokenVerified) {
           next()
         } else {
-          throw new Error(
-              `cannot authenticate user from user validation middleware:`,
-          )
+          handleUnauthorizedError(next)
+          // throw new Error(
+          //     `cannot authenticate user from user validation middleware:`,
+          // )
         }
       } else {
-        throw new Error(
-            `cannot authenticate user from user validation middleware:`,
-        )
+        handleUnauthorizedError(next)
+        // throw new Error(
+        //     `cannot authenticate user from user validation middleware:`,
+        // )
       }
     } else {
-      // no token provided (throw err) should be handled by err interface
-      throw new Error(`cannot validate user from user validation middleware:`)
+      handleUnauthorizedError(next)
+      // throw new Error(
+      //     `cannot validate user from user validation middleware:`,
+      // )
     }
     // check auth header validate
     // check token value
@@ -45,9 +62,10 @@ const validateTokenMiddleware = (
     // token type not bearer
     // if not validate auth header
   } catch (error) {
-    // should be handled with your error interface not like this
-    throw new Error(`cannot authenticate user from user validation middleware: 
-    ${error}`)
+    handleUnauthorizedError(next)
+    // throw new Error(
+    //     `cannot authenticate user from user validation middleware:
+    //     ${error}`)
   }
 }
 
