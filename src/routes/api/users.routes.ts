@@ -1,10 +1,11 @@
 import {Router} from 'express'
 import * as controllers from '../../controllers/users.controller'
+import authMiddleware from '../../middlewares/authentication.middleware'
 
 const routes = Router()
 
 routes.route('/')
-    .get(controllers.getAllUsers)
+    .get(authMiddleware, controllers.getAllUsers)
     .post(controllers.createUser)
 routes.route('/:id')
     .get(controllers.getUser)
