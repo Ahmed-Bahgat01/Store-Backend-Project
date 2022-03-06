@@ -1,11 +1,15 @@
-import {Request, Response} from 'express'
+import {Request, Response, NextFunction} from 'express'
 import UserModel from '../models/user.model'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 
 const userModel = new UserModel()
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
   try {
     const user = await userModel.createUser(req.body)
     res.json({
@@ -14,10 +18,15 @@ export const createUser = async (req: Request, res: Response) => {
       message: 'user created',
     })
   } catch (error) {
-    throw new Error(`cannot create user from user controller: ${error}`)
+    next(error)
   }
 }
-export const getAllUsers = async (req: Request, res: Response) => {
+
+export const getAllUsers = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
   try {
     const users = await userModel.getAllUsers()
     res.json({
@@ -26,10 +35,15 @@ export const getAllUsers = async (req: Request, res: Response) => {
       message: 'users returned successfully',
     })
   } catch (error) {
-    throw new Error(`cannot get all users from user controller: ${error}`)
+    next(error)
   }
 }
-export const getUser = async (req: Request, res: Response) => {
+
+export const getUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
   try {
     const user = await userModel.getUser(req.params.id as unknown as string)
     res.json({
@@ -38,10 +52,15 @@ export const getUser = async (req: Request, res: Response) => {
       message: 'user returned successfully',
     })
   } catch (error) {
-    throw new Error(`cannot get user from user controller: ${error}`)
+    next(error)
   }
 }
-export const updateUser = async (req: Request, res: Response) => {
+
+export const updateUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
   try {
     const updatedUser = await userModel.updateUser(req.body)
     res.json({
@@ -50,10 +69,15 @@ export const updateUser = async (req: Request, res: Response) => {
       message: 'user updated successfully',
     })
   } catch (error) {
-    throw new Error(`cannot update user from user controller: ${error}`)
+    next(error)
   }
 }
-export const deleteUser = async (req: Request, res: Response) => {
+
+export const deleteUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
   try {
     const deletedUser = await userModel.
         deleteUser(req.params.id as unknown as string)
@@ -63,11 +87,16 @@ export const deleteUser = async (req: Request, res: Response) => {
       message: 'user deleted successfully',
     })
   } catch (error) {
-    throw new Error(`cannot delete user from user controller: ${error}`)
+    next(error)
   }
 }
+
 // auth
-export const authenticate = async (req: Request, res: Response) => {
+export const authenticate = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
   try {
     const {email, password} = req.body
     const user = await userModel.authenticateUser(email, password)
@@ -84,7 +113,7 @@ export const authenticate = async (req: Request, res: Response) => {
       message: 'user authenticated successfully',
     })
   } catch (error) {
-    throw new Error(`cannot authenticate user from user controller: ${error}`)
+    next(error)
   }
 }
 // export const usersHello = (req: Request, res: Response) => {

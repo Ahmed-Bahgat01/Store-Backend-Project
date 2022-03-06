@@ -1,23 +1,23 @@
-import dotenv from 'dotenv'
-//import config from './config'
-import { Pool } from 'pg'
+// import dotenv from 'dotenv'
+import config from './config'
+import {Pool} from 'pg'
 
-dotenv.config()
+// dotenv.config()
 
-//getting environment variables from .env
-const {
-  POSTGRES_HOST,
-  POSTGRES_DB,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-} = process.env
+// getting environment variables from .env
+// const {
+//   POSTGRES_HOST,
+//   POSTGRES_DB,
+//   POSTGRES_USER,
+//   POSTGRES_PASSWORD,
+// } = process.env
 
 
 const dbClient = new Pool({
-  host: POSTGRES_HOST,
-  database: POSTGRES_DB,
-  user: POSTGRES_USER,
-  password: POSTGRES_PASSWORD
+  host: config.postgresHost,
+  database: config.postgresDB,
+  user: config.postgresUser,
+  password: config.postgresPassword,
 })
 
 export default dbClient
