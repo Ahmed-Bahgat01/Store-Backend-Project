@@ -98,5 +98,34 @@ class UserModel {
     }
   }
   // authenticate user
+  async authenticateUser(email: string, password: string): Promise<User|null> {
+    try {
+      const conn = await dbClient.connect()
+      const sql = `SELECT password FROM users WHERE email=$1`
+      const result = await conn.query(sql, [email] )
+      if (result.rows.length) {
+        // needs explain
+        const {password: hashPassword} = result.rows[0] // neeeeds explain
+        const isValidPassword = bcrypt.compareSync(
+            `${password}${config.password_pepper}`,
+            hashPassword,
+        )
+        if (isValidPassword) {
+          const userData = await conn.query(
+              `SELECT id, email, user_name, first_name, last_name 
+              FROM users 
+              WHERE email=$1`,
+              [email],
+          )
+          conn.release
+          return userData.rows[0]
+        }
+      }
+      conn.release
+      return null
+    } catch (error) {
+      throw new Error(`Cannot authenticate user. Error: ${error}`)
+    }
+  }
 }
 export default UserModel

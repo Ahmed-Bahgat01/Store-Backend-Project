@@ -18,6 +18,7 @@
     "rules": {
         "require-jsdoc" : 0,
         "semi": ["error", "never"],
-        "new-cap": 0
+        "new-cap": 0,
+        "no-unused-vars": "warn"
     }
 }

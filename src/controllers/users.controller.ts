@@ -1,5 +1,7 @@
 import {Request, Response} from 'express'
 import UserModel from '../models/user.model'
+import jwt from 'jsonwebtoken'
+import config from '../config'
 
 const userModel = new UserModel()
 
@@ -62,6 +64,27 @@ export const deleteUser = async (req: Request, res: Response) => {
     })
   } catch (error) {
     throw new Error(`cannot delete user from user controller: ${error}`)
+  }
+}
+// auth
+export const authenticate = async (req: Request, res: Response) => {
+  try {
+    const {email, password} = req.body
+    const user = await userModel.authenticateUser(email, password)
+    const jwtoken = jwt.sign({user}, config.jwtSecret as unknown as string)
+    if (!user) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'invalid credentials',
+      })
+    }
+    res.json({
+      Status: 'success',
+      data: {...user, jwtoken},
+      message: 'user authenticated successfully',
+    })
+  } catch (error) {
+    throw new Error(`cannot authenticate user from user controller: ${error}`)
   }
 }
 // export const usersHello = (req: Request, res: Response) => {

@@ -12,6 +12,7 @@ const {
   POSTGRES_TEST_PASSWORD,
   PASSWORD_PEPPER,
   SALT_ROUNDS,
+  JWT_SECRET,
 } = process.env
 
 export default {
@@ -26,6 +27,7 @@ export default {
   postgresTestPassword: POSTGRES_TEST_PASSWORD,
   password_pepper: PASSWORD_PEPPER,
   saltRounds: SALT_ROUNDS,
+  jwtSecret: JWT_SECRET,
 }
 
 // storeDevAdmin

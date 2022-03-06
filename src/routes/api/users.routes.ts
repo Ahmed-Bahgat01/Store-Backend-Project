@@ -10,5 +10,7 @@ routes.route('/:id')
     .get(controllers.getUser)
     .patch(controllers.updateUser)
     .delete(controllers.deleteUser)
-
+// auth
+routes.route('/authenticate')
+    .post(controllers.authenticate)
 export default routes
