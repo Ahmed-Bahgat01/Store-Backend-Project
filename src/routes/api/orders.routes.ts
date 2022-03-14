@@ -11,6 +11,9 @@ routes.route('/:id')
     .get(controllers.getOrder)
     .patch(controllers.updateOrder)
     .delete(controllers.deleteOrder)
+// add product route
+routes.route('/:id/products')
+    .post(controllers.addProduct)
 // auth
 // routes.route('/authenticate')
 //     .post(controllers.authenticate)

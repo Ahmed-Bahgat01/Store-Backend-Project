@@ -93,3 +93,25 @@ export const deleteOrder = async (
     next(error)
   }
 }
+
+// add product
+export const addProduct = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+  try {
+    const quantity: number = parseInt(req.body.quantity)
+    const orderId: string = req.params.id
+    const productId: string = req.body.product_id
+    const addedProduct = await orderModel.
+        addProduct(quantity, orderId, productId)
+    res.json({
+      Status: 'success',
+      data: addedProduct,
+      message: 'product added to order successfully',
+    })
+  } catch (error) {
+    next(error)
+  }
+}

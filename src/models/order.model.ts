@@ -92,7 +92,7 @@ class OrderModel {
       const conn = await dbClient.connect()
       const sql = `INSERT INTO order_products 
       (quantity, order_id, product_id) 
-      values ($1, $2, $3, $4)
+      values ($1, $2, $3)
       Returning *`
       const result = await conn.query(sql, [quantity, orderId, productId])
       conn.release()
