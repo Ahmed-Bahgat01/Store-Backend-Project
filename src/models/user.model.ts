@@ -8,7 +8,7 @@ const hashPassword = (password: string) => {
   return bcrypt.hashSync(`${password}${config.password_pepper}`, salt)
 }
 class UserModel {
-  // create user
+  // create
   async createUser(user:User): Promise<User> {
     try {
       const conn = await dbClient.connect()
@@ -30,7 +30,7 @@ class UserModel {
       throw new Error(`Cannot create user. Error: ${error}`)
     }
   }
-  // get all users
+  // index
   async getAllUsers(): Promise<User[]> {
     try {
       const conn = await dbClient.connect()
@@ -48,7 +48,7 @@ class UserModel {
       throw new Error(`Cannot get users. Error: ${error}`)
     }
   }
-  // get specific user
+  // show
   async getUser(id: string): Promise<User> {
     try {
       const conn = await dbClient.connect()
@@ -61,7 +61,7 @@ class UserModel {
       throw new Error(`Cannot get user. Error: ${error}`)
     }
   }
-  // update user
+  // update
   async updateUser(user: User): Promise<User> {
     try {
       const conn = await dbClient.connect()
@@ -83,7 +83,7 @@ class UserModel {
       throw new Error(`Cannot update user. Error: ${error}`)
     }
   }
-  // delete user
+  // delete
   async deleteUser(id: string): Promise<User> {
     try {
       const conn = await dbClient.connect()
