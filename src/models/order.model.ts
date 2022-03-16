@@ -103,3 +103,7 @@ class OrderModel {
   }
 }
 export default OrderModel
+
+// SELECT name, price, quantity, order_id, product_id
+//  FROM products INNER JOIN order_products
+//  ON products.id=order_products.product_id;
