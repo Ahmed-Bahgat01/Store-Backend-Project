@@ -4,10 +4,12 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
+    "build": "rm -r dist && npx tsc",
     "start": "node src/server.ts",
     "startdev": "nodemon src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "jasmine-ts",
+    "jasmine": "yarn build && jasmine-ts --config=./spec/support/jasmine.json",
+    "test" : "export NODE_ENV=test  && db-migrate up --config ./database.json -e test && tsc && yarn jasmine && db-migrate reset",
     "tsc": "tsc",
     "migrate:up": "db-migrate up",
     "migrate:down": "db-migrate down"
