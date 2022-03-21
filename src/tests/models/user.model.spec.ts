@@ -1,7 +1,6 @@
 import dbClient from '../../database'
 import UserModel from '../../models/user.model'
 import User from '../../types/user.type'
-// import model from '../../models/user.model'
 
 
 const userModel = new UserModel()
@@ -17,6 +16,7 @@ describe('USER MODEL TESTS', () => {
     conn.release()
   })
   // required
+  // create
   describe('create method tests', () => {
     const user = {
       email: 'test@test.com',
@@ -44,10 +44,6 @@ describe('USER MODEL TESTS', () => {
     })
     // sad scenarios
     it('sad creating user with the same email', () => {
-      // eslint-disable-next-line max-len
-      // Error: Cannot create user. Error: error: duplicate key value violates unique constraint "users_email_key"
-      // const result = await userModel.createUser(user)
-      // console.log('-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-')
       expect(async () => {
         await userModel.createUser(user)
         // await userModel.createUser(user)
@@ -55,6 +51,7 @@ describe('USER MODEL TESTS', () => {
     })
   })
 
+  // show
   describe('show method tests', () => {
     // create new user with and get its id
     const user = {
@@ -83,7 +80,7 @@ describe('USER MODEL TESTS', () => {
     })
     // bad scenarios
   })
-
+  // index
   describe('index method tests', () => {
   // test method is defined
     it('should have getAllUsers method defined', () => {
@@ -92,12 +89,13 @@ describe('USER MODEL TESTS', () => {
     // happy scenarios
     it('happy getAllUsers() should return a users array', async () => {
       const result: User[] = await userModel.getAllUsers()
-      expect(result.length > 0).toEqual(true)
+      expect(result.length > 0).toBeTrue
     })
     // bad scenarios
   })
 
   // not required
+  // update
   describe('update method tests', () => {
     const user = {
       email: 'updatetest@test.com',
@@ -134,6 +132,7 @@ describe('USER MODEL TESTS', () => {
     // bad scenarios
   })
 
+  // delete
   describe('delete method tests', () => {
     const user = {
       email: 'deletetest@test.com',
@@ -154,18 +153,15 @@ describe('USER MODEL TESTS', () => {
     it('happy delete() should return a return deleted user', async () => {
       const result: User = await userModel.deleteUser(user.id as string)
       expect(result.id).toEqual(user.id)
-      // expect(result.email).toEqual(user.email)
-      // expect(result.user_name).toEqual(user.user_name)
-      // expect(result.first_name).toEqual(user.first_name)
-      // expect(result.last_name).toEqual(user.last_name)
     })
-    it('should throw error when getting deleted user', async () => {
+    it('should throw error when requesting deleted user', async () => {
       const result = await userModel.getUser(user.id as string)
       expect(result).toThrow
     })
     // bad scenarios
   })
 
+  // authenticate
   describe('authenticate method tests', () => {
     const user = {
       email: 'authtest@test.com',

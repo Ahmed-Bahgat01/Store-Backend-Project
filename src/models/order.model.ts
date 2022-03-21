@@ -38,7 +38,7 @@ class OrderModel {
   async show(id: string): Promise<Order> {
     try {
       const conn = await dbClient.connect()
-      const sql = `SELECT status, user_id FROM orders WHERE id=($1)`
+      const sql = `SELECT * FROM orders WHERE id=($1)`
       const result = await conn.query(sql, [id])
       conn.release()
       return result.rows[0]

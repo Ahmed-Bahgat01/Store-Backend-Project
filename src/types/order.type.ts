@@ -1,5 +1,5 @@
 type Order = {
-  id: string,
+  id?: string,
   status: string,
   user_id: string
 }
