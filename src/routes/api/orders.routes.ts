@@ -14,7 +14,8 @@ routes.route('/:id')
 // add product route
 routes.route('/:id/products')
     .post(controllers.addProduct)
-// auth
-// routes.route('/authenticate')
-//     .post(controllers.authenticate)
+    .get(controllers.getOrderProducts)
+
+routes.route('/:id/products/:pid')
+    .delete(controllers.deleteProduct)
 export default routes

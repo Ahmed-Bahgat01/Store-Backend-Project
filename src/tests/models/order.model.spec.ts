@@ -137,6 +137,11 @@ describe('ORDER MODEL TESTS', () => {
     // bad scenarios
   })
 
+  // TODO: test addProduct "look down"
+  // TODO: test deleteProduct
+  // TODO: test getOrderProducts
+  // TODO: test bad scenarios
+
   // add product
   // describe('add Product method tests', () => {
   //   const product = {

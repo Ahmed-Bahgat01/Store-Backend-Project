@@ -14,7 +14,7 @@ export const createOrder = async (
     res.json({
       Status: 'success',
       data: {...order},
-      message: 'user created',
+      message: 'order created',
     })
   } catch (error) {
     next(error)
@@ -109,6 +109,48 @@ export const addProduct = async (
     res.json({
       Status: 'success',
       data: addedProduct,
+      message: 'product added to order successfully',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+// delete product
+export const deleteProduct = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+  try {
+    // const quantity: number = parseInt(req.body.quantity)
+    const orderId: string = req.params.id
+    const productId: string = req.body.product_id
+    const deletedProduct = await orderModel.
+        deleteProduct(orderId, productId)
+    res.json({
+      Status: 'success',
+      data: deletedProduct,
+      message: 'product deleted from order successfully',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+// get order products
+export const getOrderProducts = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+  try {
+    const orderId: string = req.params.id
+    const orderProducts = await orderModel.
+        getOrderProducts(orderId)
+    res.json({
+      Status: 'success',
+      data: orderProducts,
       message: 'product added to order successfully',
     })
   } catch (error) {

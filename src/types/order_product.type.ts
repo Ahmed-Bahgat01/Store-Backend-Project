@@ -3,9 +3,9 @@ import Product from './product.type'
 type OrderProduct = {
   id?: number;
   quantity: number;
-  orderId: number;
+  orderId?: number;
   productId: number;
-  products?: Product[];
+  // products?: Product[];
 };
 
 export default OrderProduct
