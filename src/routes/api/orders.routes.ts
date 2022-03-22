@@ -11,11 +11,9 @@ routes.route('/:id')
     .get(controllers.getOrder)
     .patch(controllers.updateOrder)
     .delete(controllers.deleteOrder)
-// add product route
 routes.route('/:id/products')
     .post(controllers.addProduct)
     .get(controllers.getOrderProducts)
-
 routes.route('/:id/products/:pid')
     .delete(controllers.deleteProduct)
 export default routes

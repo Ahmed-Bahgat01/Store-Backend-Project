@@ -125,7 +125,7 @@ export const deleteProduct = async (
   try {
     // const quantity: number = parseInt(req.body.quantity)
     const orderId: string = req.params.id
-    const productId: string = req.body.product_id
+    const productId: string = req.params.pid
     const deletedProduct = await orderModel.
         deleteProduct(orderId, productId)
     res.json({

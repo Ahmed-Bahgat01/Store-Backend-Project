@@ -70,3 +70,5 @@ const validateTokenMiddleware = (
 }
 
 export default validateTokenMiddleware
+
+// TODO: add authorization

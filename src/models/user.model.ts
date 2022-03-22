@@ -133,9 +133,7 @@ class UserModel {
   async getUserOrders(userId: string): Promise<Order[]> {
     try {
       const conn = await dbClient.connect()
-      const sql = `SELECT * FROM orders 
-      WHERE user_id=$1
-      RETURNING *`
+      const sql = `SELECT id, status FROM orders WHERE user_id=$1`
       const result = await conn.query(sql, [userId])
       conn.release()
       return result.rows
