@@ -3,12 +3,12 @@ import OrderModel from '../../models/order.model'
 import dbClient from '../../database'
 import User from '../../types/user.type'
 import UserModel from '../../models/user.model'
-import ProductModel from '../../models/product.model'
-import Product from '../../types/product.type'
+// import ProductModel from '../../models/product.model'
+// import Product from '../../types/product.type'
 
 const userModel = new UserModel()
 const orderModel = new OrderModel()
-const productModel = new ProductModel()
+// const productModel = new ProductModel()
 
 describe('ORDER MODEL TESTS', () => {
   const user = {

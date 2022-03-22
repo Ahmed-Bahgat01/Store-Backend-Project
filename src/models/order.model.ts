@@ -81,6 +81,7 @@ class OrderModel {
     }
   }
   // add product to order in join table
+  // REVISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
   async addProduct(
       quantity: number,
       orderId: string,
