@@ -118,8 +118,22 @@ export const authenticate = async (
     next(error)
   }
 }
-// export const usersHello = (req: Request, res: Response) => {
-//   res.json({
-//     message: 'hello world from users',
-//   })
-// }
+
+export const getUserOrders = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+  try {
+    const userOrders = await userModel.
+        getUserOrders(req.params.id as unknown as string)
+    res.json({
+      Status: 'success',
+      data: userOrders,
+      message: 'user orders achieved successfully',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+

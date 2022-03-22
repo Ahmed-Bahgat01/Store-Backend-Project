@@ -193,3 +193,4 @@ describe('USER MODEL TESTS', () => {
 
 
 // TODO: test bad scenarios
+// TODO: test getUserOrders

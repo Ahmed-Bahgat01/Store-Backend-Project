@@ -2,6 +2,7 @@ import User from '../types/user.type'
 import dbClient from '../database'
 import config from '../config'
 import bcrypt from 'bcrypt'
+import Order from '../types/order.type'
 
 const hashPassword = (password: string) => {
   const salt = parseInt(config.saltRounds as string, 10)
@@ -125,6 +126,21 @@ class UserModel {
       return null
     } catch (error) {
       throw new Error(`Cannot authenticate user. Error: ${error}`)
+    }
+  }
+
+  // get orders of user
+  async getUserOrders(userId: string): Promise<Order[]> {
+    try {
+      const conn = await dbClient.connect()
+      const sql = `SELECT * FROM orders 
+      WHERE user_id=$1
+      RETURNING *`
+      const result = await conn.query(sql, [userId])
+      conn.release()
+      return result.rows
+    } catch (error) {
+      throw new Error(`Cannot get user orders. Error: ${error}`)
     }
   }
 }

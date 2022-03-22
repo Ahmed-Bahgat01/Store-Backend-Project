@@ -11,6 +11,8 @@ routes.route('/:id')
     .get(controllers.getUser)
     .patch(controllers.updateUser)
     .delete(controllers.deleteUser)
+routes.route('/:id/orders')
+    .get(controllers.getUserOrders)
 // auth
 routes.route('/authenticate')
     .post(controllers.authenticate)
