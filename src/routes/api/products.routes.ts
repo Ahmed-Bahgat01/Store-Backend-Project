@@ -5,13 +5,11 @@ import authMiddleware from '../../middlewares/authentication.middleware'
 const routes = Router()
 
 routes.route('/')
-    .get(authMiddleware, controllers.getAllProducts)
-    .post(controllers.createProduct)
+    .get(controllers.getAllProducts) // deleted auth
+    .post(authMiddleware, controllers.createProduct) // added auth
 routes.route('/:id')
     .get(controllers.getProduct)
-    .patch(controllers.updateProduct)
-    .delete(controllers.deleteProduct)
-// auth
-// routes.route('/authenticate')
-//     .post(controllers.authenticate)
+    .patch(authMiddleware, controllers.updateProduct) // added auth
+    .delete(authMiddleware, controllers.deleteProduct) // added auth
+
 export default routes

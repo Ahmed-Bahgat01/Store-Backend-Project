@@ -11,6 +11,7 @@ import Error from '../interfaces/error.interface'
 //   error.status = 401
 //   next(error)
 // }
+
 const handleUnauthorizedError = (next: NextFunction) => {
   const error:Error = new Error('Access denied')
   error.status = 401

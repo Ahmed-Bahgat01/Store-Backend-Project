@@ -1,5 +1,6 @@
 import {Request, Response, NextFunction} from 'express'
 import OrderModel from '../models/order.model'
+import Order from '../types/order.type'
 
 const orderModel = new OrderModel
 
@@ -64,7 +65,9 @@ export const updateOrder = async (
     next: NextFunction,
 ) => {
   try {
-    const updatedOrder = await orderModel.update(req.body)
+    const toBeUpdatedOrder: Order = req.body
+    toBeUpdatedOrder.id = req.params.id
+    const updatedOrder = await orderModel.update(toBeUpdatedOrder)
     res.json({
       Status: 'success',
       data: updatedOrder,

@@ -136,5 +136,6 @@ class OrderModel {
   }
 
   // TODO: add editProductQuantity() method
+  // TODO: edit order status to be (completed , active)
 }
 export default OrderModel

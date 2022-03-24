@@ -8,11 +8,13 @@ routes.route('/')
     .get(authMiddleware, controllers.getAllUsers)
     .post(controllers.createUser)
 routes.route('/:id')
-    .get(controllers.getUser)
-    .patch(controllers.updateUser)
-    .delete(controllers.deleteUser)
+    .get(authMiddleware, controllers.getUser) // added auth
+    .patch(authMiddleware, controllers.updateUser) // added auth
+    .delete(authMiddleware, controllers.deleteUser) // added auth
+
+// current order by user
 routes.route('/:id/orders')
-    .get(controllers.getUserOrders)
+    .get(authMiddleware, controllers.getUserOrders) // added auth
 // auth
 routes.route('/authenticate')
     .post(controllers.authenticate)

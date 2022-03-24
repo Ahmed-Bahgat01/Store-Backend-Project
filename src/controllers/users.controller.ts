@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from 'express'
 import UserModel from '../models/user.model'
 import jwt from 'jsonwebtoken'
 import config from '../config'
+import User from '../types/user.type'
 
 const userModel = new UserModel()
 
@@ -58,13 +59,22 @@ export const getUser = async (
   }
 }
 
+// update
 export const updateUser = async (
     req: Request,
     res: Response,
     next: NextFunction,
 ) => {
   try {
-    const updatedUser = await userModel.updateUser(req.body)
+    const toBeUpdatedUser: User = req.body
+    toBeUpdatedUser.id = req.params.id
+    // console.log(`${toBeUpdatedUser.id}`)
+    // console.log(`${toBeUpdatedUser.email}`)
+    // console.log(`${toBeUpdatedUser.user_name}`)
+    // console.log(`${toBeUpdatedUser.first_name}`)
+    // console.log(`${toBeUpdatedUser.last_name}`)
+    // console.log(`${toBeUpdatedUser.password}`)
+    const updatedUser = await userModel.updateUser(toBeUpdatedUser)
     res.json({
       Status: 'success',
       data: updatedUser,
@@ -75,6 +85,7 @@ export const updateUser = async (
   }
 }
 
+// delete
 export const deleteUser = async (
     req: Request,
     res: Response,

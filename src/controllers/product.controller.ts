@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from 'express'
 // import OrderModel from '../models/order.model'
 import ProductModel from '../models/product.model'
+import Product from '../types/product.type'
 
 const productModel = new ProductModel
 
@@ -65,7 +66,9 @@ export const updateProduct = async (
     next: NextFunction,
 ) => {
   try {
-    const updatedOrder = await productModel.update(req.body)
+    const toBeUpdatedProduct: Product = req.body
+    toBeUpdatedProduct.id = req.params.id
+    const updatedOrder = await productModel.update(toBeUpdatedProduct)
     res.json({
       Status: 'success',
       data: updatedOrder,
