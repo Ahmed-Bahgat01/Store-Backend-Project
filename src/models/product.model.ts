@@ -37,7 +37,7 @@ class ProductModel {
   async show(id: string): Promise<Product> {
     try {
       const conn = await dbClient.connect()
-      const sql = `SELECT name, price FROM products WHERE id=($1)`
+      const sql = `SELECT * FROM products WHERE id=($1)`
       const result = await conn.query(sql, [id])
       conn.release()
       return result.rows[0]
