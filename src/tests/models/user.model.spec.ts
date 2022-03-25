@@ -1,18 +1,23 @@
 import dbClient from '../../database'
+import OrderModel from '../../models/order.model'
 import UserModel from '../../models/user.model'
+import Order from '../../types/order.type'
 import User from '../../types/user.type'
 
 
 const userModel = new UserModel()
+const orderModel = new OrderModel()
 
 describe('USER MODEL TESTS', () => {
   // before all
   afterAll(async () => {
     process.nextTick
     const conn = await dbClient.connect()
-    const sql = `DELETE FROM users;`
+    const deleteOrdersSql = `DELETE FROM orders;`
+    const deleteUsersSql = `DELETE FROM users;`
     // console.log(`after alll is runnnnninninnng`)
-    await conn.query(sql)
+    await conn.query(deleteOrdersSql)
+    await conn.query(deleteUsersSql)
     conn.release()
   })
   // required
@@ -189,8 +194,49 @@ describe('USER MODEL TESTS', () => {
     })
     // bad scenarios
   })
+
+  // get user orders
+  describe('get user orders method tests', () => {
+    const user = {
+      email: 'getuserorders@test.com',
+      user_name: 'getuserorders',
+      first_name: 'Test',
+      last_name: 'User',
+      password: 'getuserorders',
+    } as User
+    const order1 = {
+      status: 'complete',
+      user_id: 'placeholder',
+    } as Order
+    const order2 = {
+      status: 'active',
+      user_id: 'placeholder',
+    } as Order
+    beforeAll(async () => {
+      const createdUser = await userModel.createUser(user)
+      user.id = createdUser.id
+      order1.user_id = user.id as string
+      order2.user_id = user.id as string
+      const createdOrder1 = await orderModel.create(order1)
+      const createdOrder2 = await orderModel.create(order2)
+      order1.id = createdOrder1.id
+      order2.id = createdOrder2.id
+    })
+    // test method is defined
+    it('should have getUserOrders method defined', () => {
+      expect(userModel.getUserOrders).toBeDefined()
+    })
+    // happy scenarios
+    it('happy getUserOrders() should return a user orders', async () => {
+      const result: Order[] = await userModel.getUserOrders(user.id as string)
+      expect(result.length).toEqual(2)
+      expect(result[0].id).toEqual(order1.id)
+      expect(result[1].id).toEqual(order2.id)
+    })
+    // bad scenarios
+  })
 })
 
 
 // TODO: test bad scenarios
-// TODO: test getUserOrders
+

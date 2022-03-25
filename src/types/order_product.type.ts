@@ -1,9 +1,9 @@
 
 type OrderProduct = {
-  id?: number;
+  id?: string;
   quantity: number;
-  orderId?: number;
-  productId: number;
+  order_id?: string;
+  product_id: string;
   // products?: Product[];
 };
 

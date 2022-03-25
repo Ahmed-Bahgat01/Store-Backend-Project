@@ -3,11 +3,13 @@ import OrderModel from '../../models/order.model'
 import dbClient from '../../database'
 import User from '../../types/user.type'
 import UserModel from '../../models/user.model'
-// import ProductModel from '../../models/product.model'
-// import Product from '../../types/product.type'
+import Product from '../../types/product.type'
+import ProductModel from '../../models/product.model'
+import OrderProduct from '../../types/order_product.type'
 
 const userModel = new UserModel()
 const orderModel = new OrderModel()
+const productModel = new ProductModel()
 // const productModel = new ProductModel()
 
 describe('ORDER MODEL TESTS', () => {
@@ -29,8 +31,12 @@ describe('ORDER MODEL TESTS', () => {
     const conn = await dbClient.connect()
     const deleteOrdersSql = `DELETE FROM orders;`
     const deleteUsersSql = `DELETE FROM users;`
+    const deleteProductsSql = `DELETE FROM products`
+    const deleteOrderProductsSql = `DELETE FROM order_products`
+    await conn.query(deleteOrderProductsSql)
     await conn.query(deleteOrdersSql)
     await conn.query(deleteUsersSql)
+    await conn.query(deleteProductsSql)
     conn.release()
   })
   describe('create method tests', () => {
@@ -138,38 +144,140 @@ describe('ORDER MODEL TESTS', () => {
   })
 
   // TODO: test addProduct "look down"
-  // TODO: test deleteProduct
-  // TODO: test getOrderProducts
-  // TODO: test bad scenarios
 
-  // add product
-  // describe('add Product method tests', () => {
-  //   const product = {
-  //     name: 'keyboard',
-  //     price: 20,
-  //   } as Product
-  //   const order = {
-  //     status: 'shipping',
-  //     user_id: user.id,
-  //   } as Order
-  //   beforeAll(async () => {
-  //     // create product
-  //     const createdProduct = await productModel.create(product)
-  //     product.id = createdProduct.id
-  //     // create order
-  //     const createdOrder = await orderModel.create(order)
-  //     order.id = createdOrder.id
-  //   })
-  //   // test method is defined
-  //   it('should have addProduct method defined', () => {
-  //     expect(orderModel.addProduct).toBeDefined()
-  //   })
-  //   // happy scenarios
-  //   it('happy addProduct() should return orders array', async () => {
-  //     const result: Order = await orderModel.index()
-  //     // expect(result.length > 0).toBeTrue
-  //   })
-  //   // bad scenarios
-  // })
+  // add product to order
+  describe('add Product method tests', () => {
+    const product = {
+      name: 'keyboard',
+      price: 20,
+    } as Product
+    const order = {
+      status: 'active',
+      user_id: user.id,
+    } as Order
+    beforeAll(async () => {
+      // create product
+      const createdProduct = await productModel.create(product)
+      product.id = createdProduct.id as string
+      // create order
+      const createdOrder = await orderModel.create(order)
+      order.id = createdOrder.id as string
+    })
+    // test method is defined
+    it('should have addProduct method defined', () => {
+      expect(orderModel.addProduct).toBeDefined()
+    })
+    // happy scenarios
+    it('happy addProduct() should return orderProduct', async () => {
+      const orderProduct = {
+        quantity: 20,
+        order_id: order.id as string,
+        product_id: product.id as string,
+      } as OrderProduct
+      const result: OrderProduct = await orderModel.addProduct(orderProduct)
+      expect(result.order_id).toEqual(order.id)
+      expect(result.product_id).toEqual(product.id as string)
+    })
+    // bad scenarios
+  })
+
+  // delete product from order
+  describe('delete Product method tests', () => {
+    const product = {
+      name: 'prolom',
+      price: 20,
+    } as Product
+    const order = {
+      status: 'active',
+      user_id: user.id,
+    } as Order
+    beforeAll(async () => {
+      // create product
+      const createdProduct = await productModel.create(product)
+      product.id = createdProduct.id as string
+      // create order
+      const createdOrder = await orderModel.create(order)
+      order.id = createdOrder.id as string
+    })
+    // test method is defined
+    it('should have deleteProduct method defined', () => {
+      expect(orderModel.deleteProduct).toBeDefined()
+    })
+    // happy scenarios
+    it('happy deleteProduct() should return deleted OrderProduct', async () => {
+      const orderProduct = {
+        quantity: 20,
+        order_id: order.id as string,
+        product_id: product.id as string,
+      } as OrderProduct
+      // add product to order
+      const createdOrderProduct: OrderProduct = await orderModel
+          .addProduct(orderProduct)
+      const result = await orderModel
+          .deleteProduct(
+            createdOrderProduct.order_id as string,
+            createdOrderProduct.product_id,
+          )
+      expect(result.order_id).toEqual(orderProduct.order_id)
+      expect(result.product_id).toEqual(orderProduct.product_id)
+    })
+    // bad scenarios
+  })
+
+  // get Order Products
+  describe('get order products method tests', () => {
+    const product1 = {
+      name: 'tralam',
+      price: 79,
+    } as Product
+    const product2 = {
+      name: 'domtac',
+      price: 96,
+    } as Product
+    const order = {
+      status: 'active',
+      user_id: user.id,
+    } as Order
+    beforeAll(async () => {
+      // create products
+      const createdProduct1 = await productModel.create(product1)
+      const createdProduct2 = await productModel.create(product2)
+      product1.id = createdProduct1.id as string
+      product2.id = createdProduct2.id as string
+
+      // create order
+      const createdOrder = await orderModel.create(order)
+      order.id = createdOrder.id as string
+    })
+    // test method is defined
+    it('should have getOrderProducts method defined', () => {
+      expect(orderModel.getOrderProducts).toBeDefined()
+    })
+    // happy scenarios
+    it('happy getOrderProducts() should return Order Products', async () => {
+      const orderProduct1 = {
+        quantity: 20,
+        order_id: order.id as string,
+        product_id: product1.id as string,
+      } as OrderProduct
+      const orderProduct2 = {
+        quantity: 90,
+        order_id: order.id as string,
+        product_id: product2.id as string,
+      } as OrderProduct
+
+      // add products to order
+      await orderModel.addProduct(orderProduct1)
+      await orderModel.addProduct(orderProduct2)
+
+      const result = await orderModel
+          .getOrderProducts( order.id as string)
+      expect(result.length).toEqual(2)
+      expect(result[0].product_id).toEqual(orderProduct1.product_id)
+      expect(result[1].product_id).toEqual(orderProduct2.product_id)
+    })
+    // bad scenarios
+  })
+  // TODO: test bad scenarios
 })
 

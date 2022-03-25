@@ -82,18 +82,18 @@ class OrderModel {
     }
   }
   // add product to order in join table
-  async addProduct(
-      quantity: number,
-      orderId: string,
-      productId: string,
-  ): Promise<OrderProduct> {
+  async addProduct(orderProduct: OrderProduct): Promise<OrderProduct> {
     try {
       const conn = await dbClient.connect()
       const sql = `INSERT INTO order_products 
       (quantity, order_id, product_id) 
       values ($1, $2, $3)
       Returning *`
-      const result = await conn.query(sql, [quantity, orderId, productId])
+      const result = await conn.query(sql, [
+        orderProduct.quantity,
+        orderProduct.order_id as string,
+        orderProduct.product_id as string,
+      ])
       conn.release()
       return result.rows[0]
     } catch (error) {

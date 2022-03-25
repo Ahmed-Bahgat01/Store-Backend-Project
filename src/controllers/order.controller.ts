@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from 'express'
 import OrderModel from '../models/order.model'
 import Order from '../types/order.type'
+import OrderProduct from '../types/order_product.type'
 
 const orderModel = new OrderModel
 
@@ -104,11 +105,10 @@ export const addProduct = async (
     next: NextFunction,
 ) => {
   try {
-    const quantity: number = parseInt(req.body.quantity)
-    const orderId: string = req.params.id
-    const productId: string = req.body.product_id
+    const orderProduct: OrderProduct = req.body
+    orderProduct.order_id = req.params.id
     const addedProduct = await orderModel.
-        addProduct(quantity, orderId, productId)
+        addProduct(orderProduct)
     res.json({
       Status: 'success',
       data: addedProduct,
