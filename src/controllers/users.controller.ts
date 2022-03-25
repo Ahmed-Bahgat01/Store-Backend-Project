@@ -49,6 +49,13 @@ export const getUser = async (
 ) => {
   try {
     const user = await userModel.getUser(req.params.id as unknown as string)
+    console.log(`user: ${user}`)
+    if (typeof(user) == 'undefined') {
+      res.json({
+        Status: 'failed',
+        message: 'not exist user',
+      })
+    }
     res.json({
       Status: 'success',
       data: user,
@@ -68,13 +75,13 @@ export const updateUser = async (
   try {
     const toBeUpdatedUser: User = req.body
     toBeUpdatedUser.id = req.params.id
-    // console.log(`${toBeUpdatedUser.id}`)
-    // console.log(`${toBeUpdatedUser.email}`)
-    // console.log(`${toBeUpdatedUser.user_name}`)
-    // console.log(`${toBeUpdatedUser.first_name}`)
-    // console.log(`${toBeUpdatedUser.last_name}`)
-    // console.log(`${toBeUpdatedUser.password}`)
     const updatedUser = await userModel.updateUser(toBeUpdatedUser)
+    if (typeof(updatedUser) == 'undefined') {
+      res.json({
+        Status: 'failed',
+        message: 'not exist user',
+      })
+    }
     res.json({
       Status: 'success',
       data: updatedUser,
@@ -94,6 +101,12 @@ export const deleteUser = async (
   try {
     const deletedUser = await userModel.
         deleteUser(req.params.id as unknown as string)
+    if (typeof(deletedUser) == 'undefined') {
+      res.json({
+        Status: 'failed',
+        message: 'not exist user',
+      })
+    }
     res.json({
       Status: 'success',
       data: deletedUser,
@@ -138,6 +151,12 @@ export const getUserOrders = async (
   try {
     const userOrders = await userModel.
         getUserOrders(req.params.id as unknown as string)
+    if (userOrders.length === 0) {
+      res.json({
+        Status: 'failed',
+        message: 'not exist user',
+      })
+    }
     res.json({
       Status: 'success',
       data: userOrders,

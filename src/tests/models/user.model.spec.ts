@@ -50,7 +50,6 @@ describe('USER MODEL TESTS', () => {
     it('sad creating user with the same email', () => {
       expect(async () => {
         await userModel.createUser(user)
-        // await userModel.createUser(user)
       }).toThrow
     })
   })
@@ -69,7 +68,6 @@ describe('USER MODEL TESTS', () => {
     it('should have getUser method defined', () => {
       expect(userModel.getUser).toBeDefined()
     })
-    // happy scenarios
     it('happy show() should return user we created', async () => {
       const createdUser:User = await userModel.createUser(user)
       // get user by id
@@ -82,7 +80,6 @@ describe('USER MODEL TESTS', () => {
         last_name: createdUser.last_name,
       } as User)
     })
-    // bad scenarios
   })
   // index
   describe('index method tests', () => {
@@ -90,12 +87,10 @@ describe('USER MODEL TESTS', () => {
     it('should have getAllUsers method defined', () => {
       expect(userModel.getAllUsers).toBeDefined()
     })
-    // happy scenarios
     it('happy getAllUsers() should return a users array', async () => {
       const result: User[] = await userModel.getAllUsers()
       expect(result.length > 0).toBeTrue
     })
-    // bad scenarios
   })
 
   // not required
@@ -124,7 +119,6 @@ describe('USER MODEL TESTS', () => {
     it('should have updateUser method defined', () => {
       expect(userModel.updateUser).toBeDefined()
     })
-    // happy scenarios
     it('updateUser() should return true updated user', async () => {
       const result: User = await userModel.updateUser(updateUserData)
       expect(result.id).toEqual(updateUserData.id)
@@ -133,7 +127,6 @@ describe('USER MODEL TESTS', () => {
       expect(result.first_name).toEqual('Update')
       expect(result.last_name).toEqual('Test')
     })
-    // bad scenarios
   })
 
   // delete
@@ -153,7 +146,6 @@ describe('USER MODEL TESTS', () => {
     it('should have deleteUser method defined', () => {
       expect(userModel.deleteUser).toBeDefined()
     })
-    // happy scenarios
     it('happy delete() should return a return deleted user', async () => {
       const result: User = await userModel.deleteUser(user.id as string)
       expect(result.id).toEqual(user.id)
@@ -162,7 +154,6 @@ describe('USER MODEL TESTS', () => {
       const result = await userModel.getUser(user.id as string)
       expect(result).toThrow
     })
-    // bad scenarios
   })
 
   // authenticate
@@ -182,7 +173,6 @@ describe('USER MODEL TESTS', () => {
     it('should have authenticate method defined', () => {
       expect(userModel.authenticateUser).toBeDefined()
     })
-    // happy scenarios
     it('happy authenticate() should return a authenticated user', async () => {
       const result = await userModel.authenticateUser(
           user.email,
@@ -191,7 +181,6 @@ describe('USER MODEL TESTS', () => {
       expect(result).not.toBeNull
       expect((result as User).id).toEqual(user.id)
     })
-    // bad scenarios
   })
 
   // get user orders
@@ -225,17 +214,13 @@ describe('USER MODEL TESTS', () => {
     it('should have getUserOrders method defined', () => {
       expect(userModel.getUserOrders).toBeDefined()
     })
-    // happy scenarios
     it('happy getUserOrders() should return a user orders', async () => {
       const result: Order[] = await userModel.getUserOrders(user.id as string)
       expect(result.length).toEqual(2)
       expect(result[0].id).toEqual(order1.id)
       expect(result[1].id).toEqual(order2.id)
     })
-    // bad scenarios
   })
 })
 
-
-// TODO: test bad scenarios
 

@@ -10,7 +10,6 @@ import OrderProduct from '../../types/order_product.type'
 const userModel = new UserModel()
 const orderModel = new OrderModel()
 const productModel = new ProductModel()
-// const productModel = new ProductModel()
 
 describe('ORDER MODEL TESTS', () => {
   const user = {
@@ -44,7 +43,6 @@ describe('ORDER MODEL TESTS', () => {
     it('should have create method defined', () => {
       expect(orderModel.create).toBeDefined()
     })
-    // happy scenarios
     it('happy create() should return created order', async () => {
       const order = {
         status: 'delivered',
@@ -54,7 +52,6 @@ describe('ORDER MODEL TESTS', () => {
       expect(result).toBeTruthy
       expect(result.user_id).toEqual(user.id as string)
     })
-    // bad scenarios
   })
 
   describe('index method tests', () => {
@@ -67,7 +64,6 @@ describe('ORDER MODEL TESTS', () => {
       const result: Order[] = await orderModel.index()
       expect(result.length > 0).toBeTrue
     })
-    // bad scenarios
   })
 
   describe('show method tests', () => {
@@ -83,12 +79,10 @@ describe('ORDER MODEL TESTS', () => {
     it('should have show method defined', () => {
       expect(orderModel.show).toBeDefined()
     })
-    // happy scenarios
     it('happy show() should return requested order data', async () => {
       const result = await orderModel.show(order.id as string)
       expect(result.id).toEqual(order.id)
     })
-    // bad scenarios
   })
 
   describe('update method tests', () => {
@@ -114,7 +108,6 @@ describe('ORDER MODEL TESTS', () => {
       expect(result.id).toEqual(updateOrderData.id)
       expect(result.status).toEqual(updateOrderData.status)
     })
-    // bad scenarios
   })
 
   // delete
@@ -131,7 +124,6 @@ describe('ORDER MODEL TESTS', () => {
     it('should have delete method defined', () => {
       expect(orderModel.delete).toBeDefined()
     })
-    // happy scenarios
     it('happy delete() should return deleted order', async () => {
       const result: Order = await orderModel.delete(order.id as string)
       expect(result.id).toEqual(order.id)
@@ -140,10 +132,8 @@ describe('ORDER MODEL TESTS', () => {
       const result: Order = await orderModel.show(order.id as string)
       expect(result).toThrow
     })
-    // bad scenarios
   })
 
-  // TODO: test addProduct "look down"
 
   // add product to order
   describe('add Product method tests', () => {
@@ -167,7 +157,6 @@ describe('ORDER MODEL TESTS', () => {
     it('should have addProduct method defined', () => {
       expect(orderModel.addProduct).toBeDefined()
     })
-    // happy scenarios
     it('happy addProduct() should return orderProduct', async () => {
       const orderProduct = {
         quantity: 20,
@@ -178,7 +167,6 @@ describe('ORDER MODEL TESTS', () => {
       expect(result.order_id).toEqual(order.id)
       expect(result.product_id).toEqual(product.id as string)
     })
-    // bad scenarios
   })
 
   // delete product from order
@@ -203,7 +191,6 @@ describe('ORDER MODEL TESTS', () => {
     it('should have deleteProduct method defined', () => {
       expect(orderModel.deleteProduct).toBeDefined()
     })
-    // happy scenarios
     it('happy deleteProduct() should return deleted OrderProduct', async () => {
       const orderProduct = {
         quantity: 20,
@@ -221,7 +208,6 @@ describe('ORDER MODEL TESTS', () => {
       expect(result.order_id).toEqual(orderProduct.order_id)
       expect(result.product_id).toEqual(orderProduct.product_id)
     })
-    // bad scenarios
   })
 
   // get Order Products
@@ -253,7 +239,6 @@ describe('ORDER MODEL TESTS', () => {
     it('should have getOrderProducts method defined', () => {
       expect(orderModel.getOrderProducts).toBeDefined()
     })
-    // happy scenarios
     it('happy getOrderProducts() should return Order Products', async () => {
       const orderProduct1 = {
         quantity: 20,
@@ -276,8 +261,6 @@ describe('ORDER MODEL TESTS', () => {
       expect(result[0].product_id).toEqual(orderProduct1.product_id)
       expect(result[1].product_id).toEqual(orderProduct2.product_id)
     })
-    // bad scenarios
   })
-  // TODO: test bad scenarios
 })
 

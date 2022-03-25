@@ -3,14 +3,6 @@ import jwt from 'jsonwebtoken'
 import config from '../config'
 import Error from '../interfaces/error.interface'
 
-// const handleUnauthError = (next: NextFunction){
-//   const error: Error = new Error()
-// }
-// const handleUnauthorizedError = (next: NextFunction) => {
-//   const error: Error = new Error('Login Error, Please login again')
-//   error.status = 401
-//   next(error)
-// }
 
 const handleUnauthorizedError = (next: NextFunction) => {
   const error:Error = new Error('Access denied')
@@ -38,38 +30,16 @@ const validateTokenMiddleware = (
           next()
         } else {
           handleUnauthorizedError(next)
-          // throw new Error(
-          //     `cannot authenticate user from user validation middleware:`,
-          // )
         }
       } else {
         handleUnauthorizedError(next)
-        // throw new Error(
-        //     `cannot authenticate user from user validation middleware:`,
-        // )
       }
     } else {
       handleUnauthorizedError(next)
-      // throw new Error(
-      //     `cannot validate user from user validation middleware:`,
-      // )
     }
-    // check auth header validate
-    // check token value
-    // check if it bearer token or not
-    // verify token (decode using jwtsecret)
-    // next
-    // failed to auth user
-    // token type not bearer
-    // if not validate auth header
   } catch (error) {
     handleUnauthorizedError(next)
-    // throw new Error(
-    //     `cannot authenticate user from user validation middleware:
-    //     ${error}`)
   }
 }
 
 export default validateTokenMiddleware
-
-// TODO: add authorization
