@@ -75,7 +75,6 @@ describe('PRODUCTS ENDPOINTS TESTS', () => {
           .set('Content-type', 'application/json')
           .set('Authorization', 'bearer ' + userToken)
       expect(res.statusCode).toEqual(200)
-      // expect(res.body.data[0].id).toEqual(product.id)
       expect(res.body.message).toEqual('products returned successfully')
     })
   })
