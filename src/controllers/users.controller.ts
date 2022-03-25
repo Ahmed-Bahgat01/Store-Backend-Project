@@ -51,8 +51,8 @@ export const getUser = async (
     const user = await userModel.getUser(req.params.id as unknown as string)
     console.log(`user: ${user}`)
     if (typeof(user) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist user',
       })
     }
@@ -77,8 +77,8 @@ export const updateUser = async (
     toBeUpdatedUser.id = req.params.id
     const updatedUser = await userModel.updateUser(toBeUpdatedUser)
     if (typeof(updatedUser) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist user',
       })
     }
@@ -102,8 +102,8 @@ export const deleteUser = async (
     const deletedUser = await userModel.
         deleteUser(req.params.id as unknown as string)
     if (typeof(deletedUser) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist user',
       })
     }
@@ -152,8 +152,8 @@ export const getUserOrders = async (
     const userOrders = await userModel.
         getUserOrders(req.params.id as unknown as string)
     if (userOrders.length === 0) {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist user',
       })
     }

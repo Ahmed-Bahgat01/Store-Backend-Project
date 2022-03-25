@@ -49,8 +49,8 @@ export const getProduct = async (
   try {
     const product = await productModel.show(req.params.id as unknown as string)
     if (typeof(product) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist product',
       })
     }
@@ -75,8 +75,8 @@ export const updateProduct = async (
     toBeUpdatedProduct.id = req.params.id
     const updatedProduct = await productModel.update(toBeUpdatedProduct)
     if (typeof(updatedProduct) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist product',
       })
     }
@@ -100,8 +100,8 @@ export const deleteProduct = async (
     const deletedProduct = await productModel.
         delete(req.params.id as unknown as string)
     if (typeof(deletedProduct) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist product',
       })
     }

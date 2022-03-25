@@ -50,17 +50,16 @@ export const getOrder = async (
   try {
     const order = await orderModel.show(req.params.id as unknown as string)
     if (typeof(order) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist order',
       })
-    } else {
-      res.json({
-        Status: 'success',
-        data: order,
-        message: 'order returned successfully',
-      })
     }
+    res.json({
+      Status: 'success',
+      data: order,
+      message: 'order returned successfully',
+    })
   } catch (error) {
     next(error)
   }
@@ -77,17 +76,16 @@ export const updateOrder = async (
     toBeUpdatedOrder.id = req.params.id
     const updatedOrder = await orderModel.update(toBeUpdatedOrder)
     if (typeof(updatedOrder) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist order',
       })
-    } else {
-      res.json({
-        Status: 'success',
-        data: updatedOrder,
-        message: 'order updated successfully',
-      })
     }
+    res.json({
+      Status: 'success',
+      data: updatedOrder,
+      message: 'order updated successfully',
+    })
   } catch (error) {
     next(error)
   }
@@ -103,17 +101,16 @@ export const deleteOrder = async (
     const deletedOrder = await orderModel.
         delete(req.params.id as unknown as string)
     if (typeof(deletedOrder) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist order',
       })
-    } else {
-      res.json({
-        Status: 'success',
-        data: deletedOrder,
-        message: 'order deleted successfully',
-      })
     }
+    res.json({
+      Status: 'success',
+      data: deletedOrder,
+      message: 'order deleted successfully',
+    })
   } catch (error) {
     next(error)
   }
@@ -134,25 +131,24 @@ export const addProduct = async (
       addedProduct.order_id == null ||
       typeof(addedProduct.order_id) == 'undefined'
     ) {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist order',
       })
     } else if (
       addedProduct.product_id == null ||
       typeof(addedProduct.product_id) == 'undefined'
     ) {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist product',
       })
-    } else {
-      res.json({
-        Status: 'success',
-        data: addedProduct,
-        message: 'product added to order successfully',
-      })
     }
+    res.json({
+      Status: 'success',
+      data: addedProduct,
+      message: 'product added to order successfully',
+    })
   } catch (error) {
     next(error)
   }
@@ -170,17 +166,16 @@ export const deleteProduct = async (
     const deletedProduct = await orderModel.
         deleteProduct(orderId, productId)
     if (typeof(deletedProduct) == 'undefined') {
-      res.json({
-        Status: 'failed',
+      return res.status(404).json({
+        Status: 'error',
         message: 'not exist order or product',
       })
-    } else {
-      res.json({
-        Status: 'success',
-        data: deletedProduct,
-        message: 'product deleted from order successfully',
-      })
     }
+    res.json({
+      Status: 'success',
+      data: deletedProduct,
+      message: 'product deleted from order successfully',
+    })
   } catch (error) {
     next(error)
   }
@@ -199,20 +194,19 @@ export const getOrderProducts = async (
     if (orderProducts.length === 0) {
       const getOrder = await orderModel.show(orderId)
       if (typeof(getOrder) == 'undefined') {
-        res.json({
-          Status: 'failed',
+        return res.status(404).json({
+          Status: 'error',
           message: 'not exist order',
         })
       }
-    } else {
-      res.json({
-        Status: 'success',
-        data: orderProducts,
-        message: 'order products returned successfully',
-      })
     }
+    res.json({
+      Status: 'success',
+      data: orderProducts,
+      message: 'order products returned successfully',
+    })
   } catch (error) {
     next(error)
   }
 }
-// fix cannot set header error
+
