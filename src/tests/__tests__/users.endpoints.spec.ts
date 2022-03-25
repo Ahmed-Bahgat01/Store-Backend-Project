@@ -33,10 +33,7 @@ describe('USERS ENDPOINTS TESTS', () => {
   })
   afterAll(async () => {
     const conn = await dbClient.connect()
-    // const deleteOrdersSql = `DELETE FROM orders;`
     const deleteUsersSql = `DELETE FROM users;`
-    // console.log(`after alll is runnnnninninnng`)
-    // await conn.query(delete‌OrdersSql)
     await conn.query(deleteUsersSql)
     conn.release()
   })
@@ -45,7 +42,6 @@ describe('USERS ENDPOINTS TESTS', () => {
       const res = await request(app)
           .post('/api/users')
           .set('Content-type', 'application/json')
-          // .set('Authorization', 'token')
           .send({
             'email': 'testcreateendpoint@test.com',
             'user_name': 'testcreateendpoint',
@@ -62,7 +58,6 @@ describe('USERS ENDPOINTS TESTS', () => {
       const res1 = await request(app)
           .post('/api/users')
           .set('Content-type', 'application/json')
-          // .set('Authorization', 'token')
           .send({
             'email': 'testbadcreateendpoint@test.com',
             'user_name': 'testcreateendpoint',
@@ -73,7 +68,6 @@ describe('USERS ENDPOINTS TESTS', () => {
       const res2 = await request(app)
           .post('/api/users')
           .set('Content-type', 'application/json')
-      // .set('Authorization', 'token')
           .send({
             'email': res1.body.data.email,
             'user_name': 'testcreateendpoint',
