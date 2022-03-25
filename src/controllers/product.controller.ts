@@ -1,5 +1,4 @@
 import {Request, Response, NextFunction} from 'express'
-// import OrderModel from '../models/order.model'
 import ProductModel from '../models/product.model'
 import Product from '../types/product.type'
 
@@ -49,6 +48,12 @@ export const getProduct = async (
 ) => {
   try {
     const product = await productModel.show(req.params.id as unknown as string)
+    if (typeof(product) == 'undefined') {
+      res.json({
+        Status: 'failed',
+        message: 'not exist product',
+      })
+    }
     res.json({
       Status: 'success',
       data: product,
@@ -68,10 +73,16 @@ export const updateProduct = async (
   try {
     const toBeUpdatedProduct: Product = req.body
     toBeUpdatedProduct.id = req.params.id
-    const updatedOrder = await productModel.update(toBeUpdatedProduct)
+    const updatedProduct = await productModel.update(toBeUpdatedProduct)
+    if (typeof(updatedProduct) == 'undefined') {
+      res.json({
+        Status: 'failed',
+        message: 'not exist product',
+      })
+    }
     res.json({
       Status: 'success',
-      data: updatedOrder,
+      data: updatedProduct,
       message: 'product updated successfully',
     })
   } catch (error) {
@@ -88,6 +99,12 @@ export const deleteProduct = async (
   try {
     const deletedProduct = await productModel.
         delete(req.params.id as unknown as string)
+    if (typeof(deletedProduct) == 'undefined') {
+      res.json({
+        Status: 'failed',
+        message: 'not exist product',
+      })
+    }
     res.json({
       Status: 'success',
       data: deletedProduct,
