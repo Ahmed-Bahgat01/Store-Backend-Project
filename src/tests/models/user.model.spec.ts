@@ -15,7 +15,6 @@ describe('USER MODEL TESTS', () => {
     const conn = await dbClient.connect()
     const deleteOrdersSql = `DELETE FROM orders;`
     const deleteUsersSql = `DELETE FROM users;`
-    // console.log(`after alll is runnnnninninnng`)
     await conn.query(deleteOrdersSql)
     await conn.query(deleteUsersSql)
     conn.release()
