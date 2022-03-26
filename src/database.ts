@@ -6,6 +6,11 @@ const dbClient = new Pool({
   database: config.postgresDB,
   user: config.postgresUser,
   password: config.postgresPassword,
+  port: parseInt(config.postgresPort as string, 10),
+})
+
+dbClient.on('error', (error) => {
+  console.error(`Error: ${error.message}`)
 })
 
 export default dbClient
