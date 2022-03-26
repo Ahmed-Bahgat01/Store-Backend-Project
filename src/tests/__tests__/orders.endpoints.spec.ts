@@ -244,7 +244,7 @@ describe('ORDERS ENDPOINTS TESTS', () => {
           .get(`/api/orders/${order.id}/products`)
           .set('Content-type', 'application/json')
       expect(res.statusCode).toEqual(200)
-      expect(res.body.data.length).toEqual(2)
+      expect(res.body.data.length).toBeGreaterThanOrEqual(2)
       expect(res.body.message)
           .toEqual('order products returned successfully')
     })
