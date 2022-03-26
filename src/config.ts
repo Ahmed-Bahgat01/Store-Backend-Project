@@ -31,5 +31,6 @@ export default {
   jwtSecret: JWT_SECRET,
 }
 
+// TODO: check config test env of testUser and testPassword
 // storeDevAdmin
 // storeTestAdmin

@@ -192,9 +192,7 @@ describe('ORDERS ENDPOINTS TESTS', () => {
     })
     it('happy scenario should return 200ok & orderproduct data', async () => {
       const res = await request(app)
-          // eslint-disable-next-line max-len
-          .delete(`/api/orders/${order.id as string}/products/${product4Delete.id as string}`)
-
+          .delete(`/api/orders/${order.id}/products/${product4Delete.id}`)
           .set('Content-type', 'application/json')
           .set('Authorization', 'bearer ' + userToken)
       expect(res.statusCode).toEqual(200)
@@ -216,12 +214,12 @@ describe('ORDERS ENDPOINTS TESTS', () => {
     } as Product
     const orderProduct1 = {
       quantity: 5,
-      order_id: order.id,
+      order_id: 'temp',
       product_id: 'temp',
     } as OrderProduct
     const orderProduct2 = {
       quantity: 7,
-      order_id: order.id,
+      order_id: 'temp',
       product_id: 'temp',
     } as OrderProduct
 

@@ -13,7 +13,6 @@ class OrderModel {
       const result = await conn.query(sql, [
         order.status,
         order.user_id,
-        // order.id,
       ])
       conn.release()
       return result.rows[0]

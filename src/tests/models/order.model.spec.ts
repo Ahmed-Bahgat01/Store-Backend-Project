@@ -26,7 +26,6 @@ describe('ORDER MODEL TESTS', () => {
   })
 
   afterAll(async () => {
-    // process.nextTick
     const conn = await dbClient.connect()
     const deleteOrdersSql = `DELETE FROM orders;`
     const deleteUsersSql = `DELETE FROM users;`

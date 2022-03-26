@@ -23,7 +23,6 @@ class UserModel {
         user.first_name,
         user.last_name,
         hashPassword(user.password),
-        // user.password,
       ])
       conn.release()
       return result.rows[0]
@@ -105,8 +104,7 @@ class UserModel {
       const sql = `SELECT password FROM users WHERE email=$1`
       const result = await conn.query(sql, [email] )
       if (result.rows.length) {
-        // needs explain
-        const {password: hashPassword} = result.rows[0] // neeeeds explain
+        const {password: hashPassword} = result.rows[0]
         const isValidPassword = bcrypt.compareSync(
             `${password}${config.password_pepper}`,
             hashPassword,

@@ -5,8 +5,6 @@ import errorMiddleware from './middlewares/error.middleware'
 import cors from 'cors'
 
 const app: express.Application = express()
-// const address: string = '0.0.0.0:3000'
-// const PORT = process.env.PORT || 3000
 
 // cors options for cors middleware
 const corsOptions = {
@@ -22,9 +20,5 @@ app.use(errorMiddleware)
 app.get('/', function(req: Request, res: Response) {
   res.send('Hello World!')
 })
-
-// app.listen(PORT, function() {
-//   console.log(`starting app on: ${address}`)
-// })
 
 export default app
