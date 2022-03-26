@@ -17,5 +17,3 @@ routes.route('/:id/products')
 routes.route('/:id/products/:pid')
     .delete(authMiddleware, controllers.deleteProduct) // added auth
 export default routes
-
-// TODO: handle not exist user, order or product requests

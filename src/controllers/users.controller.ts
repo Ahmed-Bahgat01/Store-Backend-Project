@@ -152,10 +152,13 @@ export const getUserOrders = async (
     const userOrders = await userModel.
         getUserOrders(req.params.id as unknown as string)
     if (userOrders.length === 0) {
-      return res.status(404).json({
-        Status: 'error',
-        message: 'not exist user',
-      })
+      const getUser = await userModel.getUser(req.params.id)
+      if (typeof(getUser) == 'undefined') {
+        return res.status(404).json({
+          Status: 'error',
+          message: 'not exist user',
+        })
+      }
     }
     res.json({
       Status: 'success',
