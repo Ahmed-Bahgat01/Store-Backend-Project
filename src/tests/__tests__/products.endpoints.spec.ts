@@ -52,6 +52,8 @@ describe('PRODUCTS ENDPOINTS TESTS', () => {
     await conn.query(deleteProductsSql)
     conn.release()
   })
+
+  // create product endpoint
   describe('create product endpoint', () => {
     it('happy scenario should return 200ok and product data ', async () => {
       const res = await request(app)
@@ -67,7 +69,7 @@ describe('PRODUCTS ENDPOINTS TESTS', () => {
     })
   })
 
-  // test index
+  // test index endpoint
   describe('get all products endpoint', () => {
     it('happy scenario should return 200ok and userslist ', async () => {
       const res = await request(app)
@@ -79,7 +81,7 @@ describe('PRODUCTS ENDPOINTS TESTS', () => {
     })
   })
 
-  // test show
+  // test show endpoint
   describe('get product endpoint', () => {
     it('happy scenario should return 200ok and product data ', async () => {
       const res = await request(app)
@@ -88,6 +90,47 @@ describe('PRODUCTS ENDPOINTS TESTS', () => {
       expect(res.statusCode).toEqual(200)
       expect(res.body.data.id).toEqual(product.id)
       expect(res.body.message).toEqual('product returned successfully')
+    })
+  })
+
+  // test update endpoint
+  describe('update product endpoint', () => {
+    it('happy scenario should return 200ok & new product data ', async () => {
+      const updateProductPrice = 96
+      const res = await request(app)
+          .patch(`/api/products/${product.id}`)
+          .set('Content-type', 'application/json')
+          .set('Authorization', 'bearer ' + userToken)
+          .send({
+            'name': product.name,
+            'price': updateProductPrice, // update price of the product
+          })
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.data.price).toEqual(updateProductPrice)
+      expect(res.body.message).toEqual('product updated successfully')
+    })
+  })
+
+  // test delete endpoint
+  describe('delete user endpoint', () => {
+    // creating product
+    const product4Delete = {
+      name: '4delete',
+      price: 96,
+    } as Product
+    beforeAll(async () => {
+      // create producy by productModel
+      const createdProduct = await productModel.create(product4Delete)
+      product4Delete.id = createdProduct.id
+    })
+    it('happy should return 200ok & deleted product data ', async () => {
+      const res = await request(app)
+          .delete(`/api/products/${product4Delete.id}`)
+          .set('Content-type', 'application/json')
+          .set('Authorization', 'bearer ' + userToken)
+      expect(res.statusCode).toEqual(200)
+      expect(res.body.data.id).toEqual(product4Delete.id)
+      expect(res.body.message).toEqual('product deleted successfully')
     })
   })
 })
