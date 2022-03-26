@@ -49,7 +49,6 @@ export const getUser = async (
 ) => {
   try {
     const user = await userModel.getUser(req.params.id as unknown as string)
-    console.log(`user: ${user}`)
     if (typeof(user) == 'undefined') {
       return res.status(404).json({
         Status: 'error',
