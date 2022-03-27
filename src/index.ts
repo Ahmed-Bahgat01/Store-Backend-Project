@@ -8,7 +8,8 @@ const app: express.Application = express()
 
 // cors options for cors middleware
 const corsOptions = {
-  origin: 'http://someotherdomain.com',
+  // origin: 'http://someotherdomain.com',
+  methods: 'GET,PATCH,POST,DELETE',
   optionsSuccessStatus: 200,
 }
 // using cors middleware 4 all the app
